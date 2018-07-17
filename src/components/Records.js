@@ -11,6 +11,7 @@ class Records extends Component {
       isLoaded:false,
       records:[]
     }
+    this.AddRecord = this.AddRecord.bind(this);
   }
   
   componentDidMount(){
@@ -25,6 +26,17 @@ class Records extends Component {
         error:error
       })
     )
+  }
+
+  AddRecord(record){
+    this.setState({
+      error:null,
+      isLoaded:true,
+      records:[
+        ...this.state.records,
+        record
+      ]
+    });
   }
 
   render() {
@@ -54,7 +66,7 @@ class Records extends Component {
     return (
       <div>
         <h2>Records</h2>
-        <RecordForm />
+        <RecordForm handleNewRecord={this.AddRecord}/>
         {recordsComponent}
       </div>
     );
