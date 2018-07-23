@@ -12,6 +12,7 @@ class Records extends Component {
       records:[]
     }
     this.AddRecord = this.AddRecord.bind(this);
+    this.updateRecord = this.updateRecord.bind(this);
   }
   
   componentDidMount(){
@@ -39,6 +40,25 @@ class Records extends Component {
     });
   }
 
+  updateRecord(oldData,neweData){
+    const recordIndex = this.state.records.indexOf(oldData);
+    const newRecords = this.state.records.map( (item, index) => {
+      if(index !== recordIndex) {
+          // This isn't the item we care about - keep it as-is
+          return item;
+      }
+
+      // Otherwise, this is the one we want - return an updated value
+      return {
+          ...item,
+          ...neweData
+      };    
+    });
+    this.setState({
+      records:newRecords
+    })
+  }
+
   render() {
     const {error,isLoaded,records} = this.state;
     let recordsComponent;
@@ -58,7 +78,7 @@ class Records extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.records.map(item => <Record  key={item.id} {...item}/>)}
+            {this.state.records.map(item => <Record  key={item.id} record={item} handleEditRecord={this.updateRecord}/>)}
           </tbody>
         </table>
       );

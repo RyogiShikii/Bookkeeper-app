@@ -42,7 +42,7 @@ export default class RecordForm extends Component {
     handleChange(e){
         let name = e.target.name;
         let value = e.target.value;
-        this.setState({[name]:value});
+        this.setState({[name]:value});//
     }
 
     render() {
