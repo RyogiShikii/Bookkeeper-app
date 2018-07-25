@@ -10,6 +10,7 @@ export default class Record extends Component {
     }
     this.handleToggle = this.handleToggle.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
   
   handleEdit(e){
@@ -29,6 +30,17 @@ export default class Record extends Component {
     )
   }
 
+  handleDelete(e){
+    e.preventDefault();
+    RecordAPI.remove(this.props.record.id).then(
+      response => {
+        this.props.handleDeleteRecord(this.props.record)
+      }
+    ).catch(
+      error => console.log(error.message)
+    )
+  }
+
   recordRow(){
     return (
       <tr>
@@ -37,7 +49,7 @@ export default class Record extends Component {
           <td>{this.props.record.amount}</td>
           <td>
             <button className='btn btn-info mr-1' onClick={this.handleToggle}>Edit</button>
-            <button className='btn btn-danger'>Delete</button>
+            <button className='btn btn-danger' onClick={this.handleDelete}>Delete</button>
           </td>
       </tr>
     );

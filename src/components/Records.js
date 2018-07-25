@@ -13,6 +13,7 @@ class Records extends Component {
     }
     this.AddRecord = this.AddRecord.bind(this);
     this.updateRecord = this.updateRecord.bind(this);
+    this.deleteRecord = this.deleteRecord.bind(this);
   }
   
   componentDidMount(){
@@ -59,6 +60,14 @@ class Records extends Component {
     })
   }
 
+  deleteRecord(removedData){
+    const recordIndex = this.state.records.indexOf(removedData);
+    const newRecord = this.state.records.filter( (item, index) => index !== recordIndex);
+    this.setState(
+      {records:newRecord}
+    )
+  }
+
   render() {
     const {error,isLoaded,records} = this.state;
     let recordsComponent;
@@ -78,7 +87,14 @@ class Records extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.records.map(item => <Record  key={item.id} record={item} handleEditRecord={this.updateRecord}/>)}
+            {this.state.records.map(item => (
+              <Record  
+                key={item.id} 
+                record={item} 
+                handleEditRecord={this.updateRecord}
+                handleDeleteRecord={this.deleteRecord}
+              />)
+            )}
           </tbody>
         </table>
       );
